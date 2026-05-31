@@ -1,6 +1,6 @@
 from datetime import date
 from typing import Optional
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class ProjectCreate(BaseModel):
@@ -8,14 +8,17 @@ class ProjectCreate(BaseModel):
     description: Optional[str] = None
     start_date: Optional[date] = None
 
+
 class ProjectUpdate(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     start_date: Optional[date] = None
 
+
 class ProjectResponse(ProjectCreate):
     id: int
     is_completed: bool
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(
+        from_attributes=True
+    )
