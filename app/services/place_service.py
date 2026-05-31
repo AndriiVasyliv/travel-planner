@@ -68,3 +68,45 @@ class PlaceService:
         db.refresh(place)
 
         return place
+
+    @staticmethod
+    def get_places(
+            db: Session,
+            project_id: int
+    ):
+        project = (
+            db.query(Project)
+            .filter(Project.id == project_id)
+            .first()
+        )
+
+        if not project:
+            raise HTTPException(
+                status_code=404,
+                detail="Project not found"
+            )
+
+        return project.places
+
+    @staticmethod
+    def get_place(
+            db: Session,
+            project_id: int,
+            place_id: int
+    ):
+        place = (
+            db.query(Place)
+            .filter(
+                Place.id == place_id,
+                Place.project_id == project_id
+            )
+            .first()
+        )
+
+        if not place:
+            raise HTTPException(
+                status_code=404,
+                detail="Place not found"
+            )
+
+        return place
