@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+
+venv/
+.env
+
+travel_planner.db
+
+.idea/
+.vscode/
+
+.DS_Store
