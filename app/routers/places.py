@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app.database.dependencies import get_db
 from app.schemas.place import (
     PlaceCreate,
-    PlaceResponse
+    PlaceResponse, PlaceUpdate
 )
 from app.services.place_service import PlaceService
 
@@ -57,4 +57,22 @@ def get_place(
         db,
         project_id,
         place_id
+    )
+
+
+@router.patch(
+    "/{project_id}/places/{place_id}",
+    response_model=PlaceResponse
+)
+def update_place(
+        project_id: int,
+        place_id: int,
+        place: PlaceUpdate,
+        db: Session = Depends(get_db)
+):
+    return PlaceService.update_place(
+        db,
+        project_id,
+        place_id,
+        place
     )
